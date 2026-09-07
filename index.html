@@ -1518,3 +1518,24 @@ setInterval(() => {
 .contact-buttons .btn:hover{
     transform:translateY(-4px);
 }
+<div class="contact-buttons">
+
+    <a
+        href="https://wa.me/905314008897?text=Merhaba%20ORVYZA%2C%20web%20siteniz%20hakkında%20bilgi%20almak%20istiyorum."
+        class="btn btn-primary"
+        target="_blank"
+        rel="noopener"
+    >
+        💬 Serkan ile WhatsApp →
+    </a>
+
+    <a
+        href="https://wa.me/905453682967?text=Merhaba%20ORVYZA%2C%20web%20siteniz%20hakkında%20bilgi%20almak%20istiyorum."
+        class="btn btn-secondary"
+        target="_blank"
+        rel="noopener"
+    >
+        💬 Ömer ile WhatsApp →
+    </a>
+
+</div>
