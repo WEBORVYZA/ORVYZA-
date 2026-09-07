@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ORVYZA | Dijital Çözümler</title>
+
+<meta name="description"
+content="ORVYZA - Modern web siteleri, QR çözümleri ve dijital deneyimler.">
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root{
+    --bg:#05070a;
+    --bg2:#080c12;
+    --card:rgba(13,18,26,.75);
+    --border:rgba(255,255,255,.09);
+    --text:#f5f7fa;
+    --muted:#8993a3;
+    --green:#00ff9d;
+    --blue:#00c8ff;
+    --purple:#8b5cf6;
+    --danger:#ff4d67;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:Inter,sans-serif;
+    overflow-x:hidden;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:45px 45px;
+    mask-image:linear-gradient(to bottom,black,transparent);
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:600px;
+    height:600px;
+    left:50%;
+    top:10%;
+    transform:translateX(-50%);
+    background:radial-gradient(circle,
+        rgba(0,255,157,.10),
+        rgba(0,200,255,.04),
+        transparent 70%);
+    filter:blur(30px);
+    pointer-events:none;
+    z-index:-3;
+}
+
+/* =========================
+   LOADER
+========================= */
+
+.loader{
+    position:fixed;
+    inset:0;
+    background:#030507;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    transition:.7s;
+}
+
+.loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-box{
+    width:320px;
+    font-family:"JetBrains Mono",monospace;
+}
+
+.loader-title{
+    color:var(--green);
+    font-size:14px;
+    margin-bottom:15px;
+}
+
+.loader-line{
+    height:3px;
+    background:#121820;
+    overflow:hidden;
+}
+
+.loader-progress{
+    width:0;
+    height:100%;
+    background:var(--green);
+    box-shadow:0 0 15px var(--green);
+    animation:loading 1.8s forwards;
+}
+
+@keyframes loading{
+    to{width:100%}
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+nav{
+    position:fixed;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(1150px,92%);
+    height:68px;
+    padding:0 22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:rgba(5,8,12,.72);
+    border:1px solid var(--border);
+    border-radius:18px;
+    backdrop-filter:blur(20px);
+
+    z-index:1000;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:800;
+    font-size:20px;
+    letter-spacing:-1px;
+}
+
+.logo-mark{
+    width:34px;
+    height:34px;
+    display:grid;
+    place-items:center;
+    border:1px solid var(--green);
+    color:var(--green);
+    border-radius:9px;
+    box-shadow:0 0 20px rgba(0,255,157,.2);
+    font-family:"JetBrains Mono";
+}
+
+.logo span{
+    color:var(--green);
+}
+
+.nav-links{
+    display:flex;
+    gap:28px;
+}
+
+.nav-links a{
+    color:#9da6b4;
+    text-decoration:none;
+    font-size:14px;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:var(--green);
+}
+
+.nav-button{
+    color:#00150d;
+    background:var(--green);
+    padding:11px 18px;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:700;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.nav-button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 25px rgba(0,255,157,.35);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:100vh;
+    padding:170px 6% 100px;
+
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    align-items:center;
+    gap:70px;
+
+    max-width:1400px;
+    margin:auto;
+}
+
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+
+    padding:8px 12px;
+    border:1px solid rgba(0,255,157,.18);
+    background:rgba(0,255,157,.04);
+    border-radius:100px;
+
+    font-size:12px;
+    color:#9fffd6;
+    font-family:"JetBrains Mono";
+    margin-bottom:25px;
+}
+
+.status-dot{
+    width:7px;
+    height:7px;
+    background:var(--green);
+    border-radius:50%;
+    box-shadow:0 0 12px var(--green);
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    50%{opacity:.35}
+}
+
+.hero h1{
+    font-size:clamp(48px,6vw,82px);
+    line-height:.98;
+    letter-spacing:-5px;
+    max-width:800px;
+}
+
+.hero h1 span{
+    color:var(--green);
+    text-shadow:0 0 30px rgba(0,255,157,.2);
+}
+
+.hero p{
+    margin-top:25px;
+    max-width:620px;
+    color:var(--muted);
+    line-height:1.8;
+    font-size:16px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:13px;
+    margin-top:35px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:14px 20px;
+    border-radius:11px;
+    text-decoration:none;
+    font-weight:700;
+    font-size:14px;
+    transition:.3s;
+}
+
+.btn-primary{
+    color:#00150d;
+    background:var(--green);
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 35px rgba(0,255,157,.2);
+}
+
+.btn-secondary{
+    color:white;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.03);
+}
+
+.btn-secondary:hover{
+    border-color:rgba(0,255,157,.4);
+}
+
+/* =========================
+   COMPUTER WINDOW
+========================= */
+
+.computer{
+    position:relative;
+    transform:perspective(1200px) rotateY(-5deg);
+    transition:.5s;
+}
+
+.computer:hover{
+    transform:perspective(1200px) rotateY(0deg) translateY(-5px);
+}
+
+.screen{
+    background:#070b10;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:16px;
+    box-shadow:
+        0 40px 100px rgba(0,0,0,.6),
+        0 0 50px rgba(0,255,157,.05);
+    overflow:hidden;
+}
+
+.window-bar{
+    height:44px;
+    display:flex;
+    align-items:center;
+    padding:0 15px;
+    border-bottom:1px solid var(--border);
+    background:#0b1017;
+}
+
+.window-dots{
+    display:flex;
+    gap:7px;
+}
+
+.window-dots i{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    display:block;
+    background:#3a424e;
+}
+
+.window-title{
+    margin-left:auto;
+    margin-right:auto;
+    font:11px "JetBrains Mono";
+    color:#647080;
+}
+
+.code{
+    padding:25px;
+    min-height:360px;
+    font:13px/2 "JetBrains Mono",monospace;
+    color:#778291;
+}
+
+.code .green{color:#00ff9d}
+.code .blue{color:#48caff}
+.code .purple{color:#b68cff}
+.code .white{color:#e5e7eb}
+.code .comment{color:#394451}
+
+.cursor{
+    display:inline-block;
+    width:7px;
+    height:15px;
+    background:var(--green);
+    vertical-align:middle;
+    animation:blink .8s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:0}
+}
+
+.terminal{
+    border-top:1px solid var(--border);
+    padding:16px 25px;
+    font:12px "JetBrains Mono";
+    color:#617080;
+}
+
+.terminal strong{
+    color:var(--green);
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    max-width:1150px;
+    margin:-25px auto 100px;
+    padding:0 20px;
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.stat{
+    padding:25px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    backdrop-filter:blur(15px);
+}
+
+.stat-number{
+    font-size:30px;
+    font-weight:800;
+    color:var(--green);
+}
+
+.stat-text{
+    margin-top:7px;
+    color:#737e8d;
+    font-size:12px;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+section{
+    padding:110px 6%;
+}
+
+.container{
+    max-width:1150px;
+    margin:auto;
+}
+
+.section-label{
+    font:12px "JetBrains Mono";
+    color:var(--green);
+    margin-bottom:12px;
+}
+
+.section-title{
+    font-size:clamp(32px,4vw,55px);
+    letter-spacing:-2.5px;
+    max-width:700px;
+}
+
+.section-description{
+    color:var(--muted);
+    max-width:600px;
+    margin-top:16px;
+    line-height:1.7;
+}
+
+/* =========================
+   SERVICES
+========================= */
+
+.services-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-top:55px;
+}
+
+.service{
+    position:relative;
+    padding:30px;
+    min-height:240px;
+
+    background:linear-gradient(
+        145deg,
+        rgba(255,255,255,.045),
+        rgba(255,255,255,.015)
+    );
+
+    border:1px solid var(--border);
+    border-radius:18px;
+
+    overflow:hidden;
+    transition:.4s;
+}
+
+.service::before{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    right:-70px;
+    top:-70px;
+    background:var(--green);
+    opacity:.08;
+    filter:blur(35px);
+    border-radius:50%;
+}
+
+.service:hover{
+    transform:translateY(-7px);
+    border-color:rgba(0,255,157,.25);
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.service-icon{
+    width:50px;
+    height:50px;
+
+    display:grid;
+    place-items:center;
+
+    border:1px solid rgba(0,255,157,.18);
+    border-radius:13px;
+
+    font-size:22px;
+    margin-bottom:25px;
+
+    background:rgba(0,255,157,.04);
+}
+
+.service h3{
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.service p{
+    color:#737e8d;
+    font-size:14px;
+    line-height:1.7;
+}
+
+/* =========================
+   QR SECTION
+========================= */
+
+.qr-section{
+    background:
+        radial-gradient(circle at 10% 50%,rgba(0,255,157,.07),transparent 35%),
+        radial-gradient(circle at 90% 50%,rgba(0,200,255,.06),transparent 35%);
+}
+
+.qr-box{
+    display:grid;
+    grid-template-columns:1fr 350px;
+    gap:60px;
+    align-items:center;
+
+    padding:60px;
+    border:1px solid var(--border);
+    border-radius:25px;
+    background:rgba(255,255,255,.02);
+}
+
+.qr-box h2{
+    font-size:clamp(30px,4vw,50px);
+    letter-spacing:-2px;
+}
+
+.qr-box p{
+    color:var(--muted);
+    line-height:1.8;
+    margin:20px 0;
+}
+
+.qr-visual{
+    aspect-ratio:1;
+    background:white;
+    border-radius:18px;
+    padding:20px;
+
+    display:grid;
+    place-items:center;
+
+    box-shadow:0 0 60px rgba(0,255,157,.12);
+}
+
+.qr-pattern{
+    width:100%;
+    height:100%;
+
+    background:
+        linear-gradient(90deg,#000 12%,transparent 12% 22%,#000 22% 30%,transparent 30% 40%,#000 40% 50%,transparent 50% 62%,#000 62% 75%,transparent 75% 84%,#000 84%),
+        linear-gradient(#000 12%,transparent 12% 25%,#000 25% 37%,transparent 37% 47%,#000 47% 59%,transparent 59% 69%,#000 69% 82%,transparent 82% 90%,#000 90%);
+    border:14px solid #000;
+}
+
+/* =========================
+   PROCESS
+========================= */
+
+.process{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:55px;
+}
+
+.step{
+    padding:25px;
+    border-left:1px solid var(--border);
+}
+
+.step-number{
+    font:12px "JetBrains Mono";
+    color:var(--green);
+    margin-bottom:25px;
+}
+
+.step h3{
+    margin-bottom:10px;
+}
+
+.step p{
+    color:#6e7988;
+    font-size:13px;
+    line-height:1.7;
+}
+
+/* =========================
+   CTA
+========================= */
+
+.cta{
+    text-align:center;
+    padding:120px 20px;
+}
+
+.cta-box{
+    max-width:900px;
+    margin:auto;
+    padding:70px 30px;
+
+    border:1px solid rgba(0,255,157,.15);
+    border-radius:25px;
+
+    background:
+        radial-gradient(circle at center,rgba(0,255,157,.08),transparent 65%);
+
+    position:relative;
+    overflow:hidden;
+}
+
+.cta-box h2{
+    font-size:clamp(35px,5vw,65px);
+    letter-spacing:-3px;
+}
+
+.cta-box p{
+    color:var(--muted);
+    margin:18px auto 30px;
+    max-width:550px;
+    line-height:1.7;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    border-top:1px solid var(--border);
+    padding:35px 6%;
+}
+
+.footer-inner{
+    max-width:1150px;
+    margin:auto;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.footer-logo{
+    font-weight:800;
+}
+
+.footer-logo span{
+    color:var(--green);
+}
+
+footer p{
+    color:#586271;
+    font-size:12px;
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+.particle{
+    position:fixed;
+    width:2px;
+    height:2px;
+    background:var(--green);
+    border-radius:50%;
+    opacity:.4;
+    pointer-events:none;
+    z-index:-1;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .hero{
+        grid-template-columns:1fr;
+        padding-top:140px;
+    }
+
+    .hero h1{
+        letter-spacing:-3px;
+    }
+
+    .computer{
+        transform:none;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .services-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .qr-box{
+        grid-template-columns:1fr;
+        padding:35px;
+    }
+
+    .qr-visual{
+        max-width:300px;
+        margin:auto;
+    }
+
+    .process{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    nav{
+        height:60px;
+    }
+
+    .nav-button{
+        padding:9px 12px;
+        font-size:11px;
+    }
+
+    .hero{
+        padding-left:20px;
+        padding-right:20px;
+    }
+
+    .hero h1{
+        font-size:46px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        margin-top:0;
+    }
+
+    .services-grid{
+        grid-template-columns:1fr;
+    }
+
+    section{
+        padding:80px 20px;
+    }
+
+    .process{
+        grid-template-columns:1fr;
+    }
+
+    .footer-inner{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .code{
+        font-size:10px;
+        padding:18px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOADER -->
+
+<div class="loader" id="loader">
+    <div class="loader-box">
+        <div class="loader-title">
+            ORVYZA SYSTEM INITIALIZING...
+        </div>
+
+        <div class="loader-line">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+</div>
+
+
+<!-- NAVBAR -->
+
+<nav>
+
+    <div class="logo">
+        <div class="logo-mark">&lt;/&gt;</div>
+        ORVYZA<span>.</span>
+    </div>
+
+    <div class="nav-links">
+        <a href="#home">Ana Sayfa</a>
+        <a href="#services">Hizmetler</a>
+        <a href="#process">Sistem</a>
+        <a href="#about">Hakkımızda</a>
+    </div>
+
+    <a href="#contact" class="nav-button">
+        PROJE BAŞLAT →
+    </a>
+
+</nav>
+
+
+<!-- HERO -->
+
+<main id="home">
+
+<section class="hero">
+
+    <div>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            SYSTEM ONLINE — READY TO BUILD
+        </div>
+
+        <h1>
+            İşletmenizi
+            <span>dijital dünyaya</span>
+            taşıyoruz.
+        </h1>
+
+        <p>
+            Modern web siteleri, QR sistemleri ve işletmenize özel
+            dijital çözümler. Tasarım, teknoloji ve performansı
+            tek bir sistemde birleştiriyoruz.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#contact" class="btn btn-primary">
+                Projenizi Başlatalım →
+            </a>
+
+            <a href="#services" class="btn btn-secondary">
+                Hizmetleri İncele
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMPUTER -->
+
+    <div class="computer">
+
+        <div class="screen">
+
+            <div class="window-bar">
+
+                <div class="window-dots">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                </div>
+
+                <div class="window-title">
+                    orvyza.system
+                </div>
+
+            </div>
+
+
+            <div class="code">
+
+                <div>
+                    <span class="purple">const</span>
+                    <span class="white"> business</span>
+                    =
+                    <span class="green"> "YOUR_BUSINESS"</span>;
+                </div>
+
+                <br>
+
+                <div>
+                    <span class="purple">function</span>
+                    <span class="blue"> buildDigitalFuture</span>() {
+                </div>
+
+                <div>
+                    &nbsp;&nbsp;
+                    <span class="purple">return</span> {
+                </div>
+
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    website:
+                    <span class="green"> "modern"</span>,
+                </div>
+
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    responsive:
+                    <span class="green"> true</span>,
+                </div>
+
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    qrSystem:
+                    <span class="green"> true</span>,
+                </div>
+
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    performance:
+                    <span class="green"> "MAX"</span>
+                </div>
+
+                <div>
+                    &nbsp;&nbsp;};
+                </div>
+
+                <div>}</div>
+
+                <br>
+
+                <div class="comment">
+                    // digital transformation complete
+                </div>
+
+                <div>
+                    <span class="green">ORVYZA</span>
+                    <span class="white"> &gt; system ready</span>
+                    <span class="cursor"></span>
+                </div>
+
+            </div>
+
+
+            <div class="terminal">
+                <strong>●</strong>
+                connection established...
+                &nbsp; | &nbsp;
+                encryption: active
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+    <div class="stat">
+        <div class="stat-number">100%</div>
+        <div class="stat-text">Mobil Uyumlu</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-number">24/7</div>
+        <div class="stat-text">Dijital Erişim</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-number">∞</div>
+        <div class="stat-text">Yaratıcı Fikir</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-number">01</div>
+        <div class="stat-text">Güçlü Dijital Sistem</div>
+    </div>
+
+</div>
+
+
+<!-- SERVICES -->
+
+<section id="services">
+
+<div class="container">
+
+    <div class="section-label">
+        // OUR_SERVICES
+    </div>
+
+    <h2 class="section-title">
+        Dijital dünyadaki
+        sisteminizi kuruyoruz.
+    </h2>
+
+    <p class="section-description">
+        Sadece güzel görünen değil, işletmenizin gerçekten
+        kullanabileceği hızlı ve modern dijital çözümler
+        geliştiriyoruz.
+    </p>
+
+
+    <div class="services-grid">
+
+        <div class="service">
+
+            <div class="service-icon">⌘</div>
+
+            <h3>Web Sitesi</h3>
+
+            <p>
+                İşletmenize özel, hızlı, modern ve profesyonel
+                web siteleri tasarlıyoruz.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">▣</div>
+
+            <h3>QR Sistemleri</h3>
+
+            <p>
+                Müşterilerinizi tek taramayla dijital dünyanıza
+                yönlendiren QR çözümleri.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">☕</div>
+
+            <h3>QR Menü</h3>
+
+            <p>
+                Restoran, kafe ve işletmeler için modern
+                dijital menü sistemleri.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">◉</div>
+
+            <h3>Mobil Tasarım</h3>
+
+            <p>
+                Telefon, tablet ve bilgisayarlarda kusursuz
+                çalışan responsive tasarımlar.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">✦</div>
+
+            <h3>Özel Tasarım</h3>
+
+            <p>
+                Hazır şablonlardan uzak, markanıza özel
+                özgün kullanıcı deneyimleri.
+            </p>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">⚡</div>
+
+            <h3>Yayın & Destek</h3>
+
+            <p>
+                Web sitenizin yayınlanmasından sonraki
+                süreçte de yanınızdayız.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- QR -->
+
+<section class="qr-section">
+
+<div class="container">
+
+    <div class="qr-box">
+
+        <div>
+
+            <div class="section-label">
+                // QR_INTERFACE
+            </div>
+
+            <h2>
+                Fiziksel dünyadan
+                dijital dünyaya.
+            </h2>
+
+            <p>
+                İşletmenize özel QR kodlar ile müşterileriniz
+                web sitenize, menünüze, kampanyanıza veya
+                istediğiniz dijital sayfaya saniyeler içinde
+                ulaşabilir.
+            </p>
+
+            <a href="#contact" class="btn btn-primary">
+                QR Sistemini Oluştur →
+            </a>
+
+        </div>
+
+
+        <div class="qr-visual">
+            <div class="qr-pattern"></div>
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- PROCESS -->
+
+<section id="process">
+
+<div class="container">
+
+    <div class="section-label">
+        // SYSTEM_PROCESS
+    </div>
+
+    <h2 class="section-title">
+        Fikirden yayına.
+        Basit bir sistem.
+    </h2>
+
+
+    <div class="process">
+
+        <div class="step">
+
+            <div class="step-number">01 / CONNECT</div>
+
+            <h3>Bize Ulaşın</h3>
+
+            <p>
+                İşletmenizi ve ihtiyaçlarınızı birlikte
+                analiz ediyoruz.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">02 / DESIGN</div>
+
+            <h3>Tasarım</h3>
+
+            <p>
+                Markanıza uygun modern ve özgün arayüz
+                tasarlıyoruz.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">03 / BUILD</div>
+
+            <h3>Geliştirme</h3>
+
+            <p>
+                Tasarımı hızlı ve responsive bir web
+                sistemine dönüştürüyoruz.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">04 / LAUNCH</div>
+
+            <h3>Yayına Al</h3>
+
+            <p>
+                Sisteminizi internete taşıyor ve
+                kullanıma hazır hale getiriyoruz.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section id="about">
+
+<div class="container">
+
+    <div class="section-label">
+        // ABOUT_ORVYZA
+    </div>
+
+    <h2 class="section-title">
+        Sıradan web siteleri
+        değil, dijital kimlikler.
+    </h2>
+
+    <p class="section-description">
+
+        ORVYZA olarak işletmelerin internette daha profesyonel,
+        daha modern ve daha ulaşılabilir görünmesine yardımcı
+        oluyoruz.
+
+        <br><br>
+
+        Tasarım ile teknolojiyi bir araya getirerek,
+        işletmenizin ihtiyaçlarına göre özel dijital
+        çözümler geliştiriyoruz.
+
+    </p>
+
+</div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section class="cta" id="contact">
+
+<div class="cta-box">
+
+    <div class="section-label">
+        // START_PROJECT
+    </div>
+
+    <h2>
+        Bir sonraki
+        <span style="color:var(--green)">
+            dijital sistem
+        </span>
+        seninki olsun.
+    </h2>
+
+    <p>
+        İşletmeniz için modern bir web sitesi,
+        QR sistemi veya özel bir dijital çözüm
+        geliştirelim.
+    </p>
+
+    <a
+        href="https://wa.me/"
+        class="btn btn-primary"
+        target="_blank"
+    >
+        WhatsApp'tan Ulaş →
+    </a>
+
+</div>
+
+</section>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-inner">
+
+    <div class="footer-logo">
+        ORVYZA<span>.</span>
+    </div>
+
+    <p>
+        © 2026 ORVYZA — Digital Solutions.
+    </p>
+
+    <p>
+        SYSTEM ONLINE ●
+    </p>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* =========================
+   LOADER
+========================= */
+
+window.addEventListener("load", () => {
+
+    setTimeout(() => {
+        document
+            .getElementById("loader")
+            .classList.add("hide");
+    }, 1900);
+
+});
+
+
+/* =========================
+   PARTICLES
+========================= */
+
+for(let i = 0; i < 45; i++){
+
+    const particle = document.createElement("div");
+
+    particle.className = "particle";
+
+    particle.style.left =
+        Math.random() * 100 + "%";
+
+    particle.style.top =
+        Math.random() * 100 + "%";
+
+    particle.style.opacity =
+        Math.random() * .5;
+
+    document.body.appendChild(particle);
+
+}
+
+
+/* =========================
+   MOUSE GLOW
+========================= */
+
+const glow = document.createElement("div");
+
+glow.style.position = "fixed";
+glow.style.width = "300px";
+glow.style.height = "300px";
+glow.style.borderRadius = "50%";
+glow.style.pointerEvents = "none";
+glow.style.background =
+    "radial-gradient(circle, rgba(0,255,157,.08), transparent 70%)";
+glow.style.transform = "translate(-50%,-50%)";
+glow.style.zIndex = "-1";
+
+document.body.appendChild(glow);
+
+document.addEventListener("mousemove", e => {
+
+    glow.style.left = e.clientX + "px";
+    glow.style.top = e.clientY + "px";
+
+});
+
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+const elements =
+    document.querySelectorAll(
+        ".service,.stat,.step,.qr-box,.cta-box"
+    );
+
+const observer =
+    new IntersectionObserver(entries => {
+
+        entries.forEach(entry => {
+
+            if(entry.isIntersecting){
+
+                entry.target.style.opacity = "1";
+                entry.target.style.transform =
+                    "translateY(0)";
+
+            }
+
+        });
+
+    },{
+        threshold:.12
+    });
+
+
+elements.forEach(el => {
+
+    el.style.opacity = "0";
+    el.style.transform = "translateY(25px)";
+    el.style.transition =
+        "opacity .7s ease, transform .7s ease";
+
+    observer.observe(el);
+
+});
+
+
+/* =========================
+   TERMINAL TEXT
+========================= */
+
+const terminalTexts = [
+    "connection established...",
+    "building digital experience...",
+    "optimizing interface...",
+    "system ready..."
+];
+
+let terminalIndex = 0;
+
+setInterval(() => {
+
+    terminalIndex =
+        (terminalIndex + 1) %
+        terminalTexts.length;
+
+    const terminal =
+        document.querySelector(".terminal");
+
+    terminal.innerHTML =
+        "<strong>●</strong> " +
+        terminalTexts[terminalIndex] +
+        " &nbsp; | &nbsp; encryption: active";
+
+},2200);
+
+</script>
+
+</body>
+</html>
