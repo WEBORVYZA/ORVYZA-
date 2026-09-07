@@ -1491,3 +1491,30 @@ setInterval(() => {
 
 </body>
 </html>
+.contact-buttons{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:30px;
+}
+
+.contact-buttons .btn{
+    min-width:210px;
+    text-align:center;
+}
+
+.contact-buttons .btn-primary{
+    background:#00ff9d;
+    color:#00150d;
+}
+
+.contact-buttons .btn-secondary{
+    border:1px solid rgba(0,255,157,.25);
+    color:white;
+    background:rgba(0,255,157,.04);
+}
+
+.contact-buttons .btn:hover{
+    transform:translateY(-4px);
+}
